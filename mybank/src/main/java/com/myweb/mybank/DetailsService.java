@@ -11,8 +11,6 @@ public class DetailsService implements UserDetailsService{
     private UserRepository repo;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
-        
         User user = repo.findByEmail(username);
         if(user == null) {
             throw new UsernameNotFoundException("Could not find user");
