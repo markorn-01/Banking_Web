@@ -33,5 +33,10 @@ public class TransactionRepositoryTests {
         assertThat(existTransaction.getFromAccount()).isEqualTo(transaction.getFromAccount());
     }
 
-   
+    @Test 
+    public void testFindTransactionByTid() {
+        Long tid = (long) 1;
+        Transactions transaction = repo.findByTid(tid);
+        assertThat(transaction).isNotNull();
+    }
 }
