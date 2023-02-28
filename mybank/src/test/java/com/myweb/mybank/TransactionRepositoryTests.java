@@ -1,6 +1,9 @@
 package com.myweb.mybank;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Date;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -26,7 +29,7 @@ public class TransactionRepositoryTests {
         transaction.setToAccount((long) 2);
         transaction.setAmount((double) 1000);
         transaction.setDescription("Transfer 1000 from account 1 to account 2");
-        transaction.setDate("2023-28-02");
+        transaction.setDate(new Date());
         transaction.setTransactionType("Transfer");
         Transactions savedTransaction = repo.save(transaction);
         Transactions existTransaction = entityManager.find(Transactions.class, savedTransaction.getTid());

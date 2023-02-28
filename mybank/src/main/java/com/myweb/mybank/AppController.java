@@ -1,5 +1,6 @@
 package com.myweb.mybank;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AppController {
     @Autowired
     private UserRepository repo;
+    @Autowired
+    private TransactionRepository trepo;
     @GetMapping("/")
     public String viewHomePage() {
         return "index";
@@ -30,10 +33,23 @@ public class AppController {
         repo.save(user);
         return "success";
     }
+    @GetMapping("/transfer")
+    public String showTransferForm(Model model, User user) {
+        Transactions transaction = new Transactions();
+        model.addAttribute("transaction", transaction);
+        return "transfer_form";
+    }
+    @PostMapping("/process_transfer")
+    public String getTransferInformation(Transactions transaction) {
+        transaction.setDate(new Date());
+        transaction.setTransactionType("Send money");
+        trepo.save(transaction);
+        return "success_transfer";
+    }
     @GetMapping("/users")
     public String listUsers(Model model) {
-        List<User> listUsers = repo.findAll();
-        model.addAttribute("users", listUsers);
+        List<Transactions> listUsers = trepo.findAll();
+        model.addAttribute("transactions", listUsers);
         return "users_table";
     }
 }
