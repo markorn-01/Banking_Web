@@ -21,16 +21,6 @@ public class TransactionRepositoryTests {
 
     @Test
     public void testCreateTransaction() {
-        // User user = new User();
-        // user.setEmail("thao@gmail.com");
-		// user.setPassword("t23");
-		// user.setFirstName("Thao");
-		// user.setLastName("Nguyen");
-        // user.setAddress("District 10, Ho Chi Minh");
-
-        // User savedUser = repo.save(user);
-        // User existUser = entityManager.find(User.class, savedUser.getId());
-        // assertThat(existUser.getEmail()).isEqualTo(user.getEmail());
         Transactions transaction = new Transactions();
         transaction.setFromAccount((long) 1);
         transaction.setToAccount((long) 2);
