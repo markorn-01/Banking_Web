@@ -1,10 +1,13 @@
 package com.myweb.mybank;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
 
 @Controller
 public class AppController {
@@ -21,8 +24,16 @@ public class AppController {
     }
     @PostMapping("/process_register")
     public String getInformation(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         repo.save(user);
         return "success";
     }
-
+    @GetMapping("/users")
+    public String listUsers(Model model) {
+        List<User> listUsers = repo.findAll();
+        model.addAttribute("users", listUsers);
+        return "users_table";
+    }
 }
