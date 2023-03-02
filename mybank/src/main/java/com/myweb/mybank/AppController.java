@@ -6,32 +6,37 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:5500")
 public class AppController {
     @Autowired
     private UserRepository repo;
     @Autowired
     private TransactionRepository trepo;
-    @GetMapping("/")
-    public String viewHomePage() {
-        return "index";
-    }
-    @GetMapping("/register")
-    public String showSignUpForm(Model model) {
-        model.addAttribute("user", new User());
-        return "signup_form";
-    }
+    // @GetMapping("/")
+    // public String viewHomePage() {
+    //     return "index";
+    // }
+    // @GetMapping("/register")
+    // public String showSignUpForm(Model model) {
+    //     model.addAttribute("user", new User());
+    //     return "signup_form";
+    // }
+    
     @PostMapping("/process_register")
-    public String getInformation(User user) {
+    public String getInformation(@RequestBody User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        System.out.println(user.getPassword());
         repo.save(user);
         return "success";
     }
