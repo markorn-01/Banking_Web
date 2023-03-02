@@ -1,6 +1,5 @@
 package com.myweb.mybank;
 
-import java.util.Date;
 
 public class TransactionDetails {
 
@@ -26,7 +25,7 @@ public class TransactionDetails {
         return transaction.getTransactionType();
     }
 
-    public Date getDate() {
+    public String getDate() {
         return transaction.getDate();
     }
 

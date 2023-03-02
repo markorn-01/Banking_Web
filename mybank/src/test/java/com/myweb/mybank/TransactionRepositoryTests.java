@@ -2,6 +2,7 @@ package com.myweb.mybank;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,9 @@ public class TransactionRepositoryTests {
         transaction.setToAccount((long) 2);
         transaction.setAmount((double) 1000);
         transaction.setDescription("Transfer 1000 from account 1 to account 2");
-        transaction.setDate(new Date());
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        transaction.setDate(formatter.format(date));
         transaction.setTransactionType("Transfer");
         Transactions savedTransaction = repo.save(transaction);
         Transactions existTransaction = entityManager.find(Transactions.class, savedTransaction.getTid());
@@ -40,6 +43,13 @@ public class TransactionRepositoryTests {
     public void testFindTransactionByTid() {
         Long tid = (long) 1;
         Transactions transaction = repo.findByTid(tid);
+        assertThat(transaction).isNotNull();
+    }
+
+    @Test
+    public void testFindTransactionByUserAccount() {
+        Long id = (long) 1;
+        Transactions transaction = repo.findByUserAccount(id);
         assertThat(transaction).isNotNull();
     }
 }

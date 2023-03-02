@@ -1,8 +1,10 @@
 package com.myweb.mybank;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,14 +43,16 @@ public class AppController {
     }
     @PostMapping("/process_transfer")
     public String getTransferInformation(Transactions transaction) {
-        transaction.setDate(new Date());
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        transaction.setDate(formatter.format(date));
         transaction.setTransactionType("Send money");
         trepo.save(transaction);
         return "success_transfer";
     }
     @GetMapping("/users")
     public String listUsers(Model model) {
-        List<Transactions> listUsers = trepo.findAll();
+        List<Transactions> listUsers = trepo.findAll(Sort.by(Sort.Direction.DESC, "date"));
         model.addAttribute("transactions", listUsers);
         return "users_table";
     }

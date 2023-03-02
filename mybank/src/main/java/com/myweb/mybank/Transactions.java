@@ -1,6 +1,5 @@
 package com.myweb.mybank;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +21,7 @@ public class Transactions {
     @Column(name = "amount", nullable = false)
     private Double amount;
     @Column(name = "date", nullable = false)
-    private Date date;
+    private String date;
     @Column(name = "description", nullable = false)
     private String description;
     @Column(name = "transaction_type", nullable = false)
@@ -57,11 +56,11 @@ public class Transactions {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String string) {
+        this.date = string;
     }
     public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
