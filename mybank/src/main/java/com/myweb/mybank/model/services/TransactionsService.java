@@ -1,11 +1,13 @@
 package com.myweb.mybank.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.myweb.mybank.model.entities.Transactions;
 import com.myweb.mybank.model.models.TransactionModel;
 import com.myweb.mybank.model.repositories.TransactionRepository;
 
+@Service
 public class TransactionsService {
     @Autowired
     private TransactionRepository repo;

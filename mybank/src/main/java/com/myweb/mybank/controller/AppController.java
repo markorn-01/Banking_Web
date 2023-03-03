@@ -17,6 +17,7 @@ import com.myweb.mybank.model.entities.Transactions;
 import com.myweb.mybank.model.entities.User;
 import com.myweb.mybank.model.repositories.TransactionRepository;
 import com.myweb.mybank.model.repositories.UserRepository;
+import com.myweb.mybank.model.services.UsersService;
 
 
 @RestController
@@ -26,6 +27,8 @@ public class AppController {
     private UserRepository repo;
     @Autowired
     private TransactionRepository trepo;
+    @Autowired
+    private UsersService usersService;
     // @GetMapping("/")
     // public String viewHomePage() {
     //     return "index";
@@ -41,8 +44,8 @@ public class AppController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        System.out.println(user.getPassword());
-        repo.save(user);
+        usersService.createUser(user);
+        usersService.loadUserByUsername(user.getEmail());
         return "success";
     }
     @GetMapping("/transfer")

@@ -20,5 +20,8 @@ async function submit() {
 	})
 	const data = await res.json()
 	console.log(data)
+    if (data.success) {
+        window.location.href = "http://localhost:5500/success";
+    }
 }
 
