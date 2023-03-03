@@ -21,7 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.myweb.mybank.DetailsService;
+import com.myweb.mybank.model.services.UsersService;
 
 
 @Configuration
@@ -32,7 +32,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new DetailsService();
+        return new UsersService();
     }
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -54,7 +54,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-            .cors(Customizer.withDefaults())
+            .cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
             .authorizeRequests()
 			.antMatchers("/users").authenticated()
 			.anyRequest().permitAll()
@@ -66,14 +66,15 @@ public class Security extends WebSecurityConfigurerAdapter{
 			.and()
 			.logout().logoutSuccessUrl("/").permitAll();
 	}
+
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
-       CorsConfiguration cors = new CorsConfiguration();
-       cors.setAllowedOrigins(Arrays.asList("http://localhost:5500"));
-       cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-       cors.setAllowedHeaders(Arrays.asList("Accept", "Content-Type"));
-       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-       source.registerCorsConfiguration("/**", cors);
-       return source;
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration cors = new CorsConfiguration();
+        cors.setAllowedOrigins(Arrays.asList("*"));
+        cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        cors.setAllowedHeaders(Arrays.asList("Accept", "Content-Type"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cors);
+        return source;
     }
 }

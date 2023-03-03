@@ -1,4 +1,4 @@
-package com.myweb.mybank;
+package com.myweb.mybank.model.entities;
 
 
 import javax.persistence.Column;

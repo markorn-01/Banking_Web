@@ -1,11 +1,12 @@
-package com.myweb.mybank;
+package com.myweb.mybank.model.models;
 
+import com.myweb.mybank.model.entities.Transactions;
 
-public class TransactionDetails {
+public class TransactionModel {
 
     private Transactions transaction;
 
-    public TransactionDetails(Transactions transaction){
+    public TransactionModel(Transactions transaction){
         this.transaction = transaction;
     }
 

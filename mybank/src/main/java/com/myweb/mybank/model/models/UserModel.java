@@ -1,15 +1,17 @@
-package com.myweb.mybank;
+package com.myweb.mybank.model.models;
 
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class Details implements UserDetails{
+import com.myweb.mybank.model.entities.User;
+
+public class UserModel implements UserDetails{
 
     private User user;
 
-    public Details(User user){
+    public UserModel(User user){
         this.user = user;
     }
 

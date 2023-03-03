@@ -1,7 +1,9 @@
-package com.myweb.mybank;
+package com.myweb.mybank.model.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import com.myweb.mybank.model.entities.Transactions;
 public interface TransactionRepository extends JpaRepository<Transactions, Long> {
     @Query("SELECT t FROM Transactions t WHERE t.tid = ?1")
     Transactions findByTid(Long tid);

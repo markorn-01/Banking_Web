@@ -1,11 +1,15 @@
-package com.myweb.mybank;
+package com.myweb.mybank.model.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class TransactionDetailsService {
+import com.myweb.mybank.model.entities.Transactions;
+import com.myweb.mybank.model.models.TransactionModel;
+import com.myweb.mybank.model.repositories.TransactionRepository;
+
+public class TransactionsService {
     @Autowired
     private TransactionRepository repo;
-    public TransactionDetails getTransactionDetails(Long tid) throws Exception {
+    public TransactionModel getTransactionDetails(Long tid) throws Exception {
         Transactions transaction = repo.findByTid(tid);
         if(transaction == null) {
             try {
@@ -14,10 +18,10 @@ public class TransactionDetailsService {
                 e.printStackTrace();
             }
         }
-        return new TransactionDetails(transaction);
+        return new TransactionModel(transaction);
     }
 
-    public TransactionDetails getTransactionDetailsByUserAccount(Long id) throws Exception {
+    public TransactionModel getTransactionDetailsByUserAccount(Long id) throws Exception {
         Transactions transaction = repo.findByUserAccount(id);
         if(transaction == null) {
             try {
@@ -26,6 +30,6 @@ public class TransactionDetailsService {
                 e.printStackTrace();
             }
         }
-        return new TransactionDetails(transaction);
+        return new TransactionModel(transaction);
     }
 }
