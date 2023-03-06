@@ -7,6 +7,7 @@ async function submit() {
     const res = await fetch("http://localhost:8080/process_register", {
         headers: {
             'Accept': 'application/json',
+            "Access-Control-Allow-Origin": "*",
             'Content-Type': 'application/json'
         },
 		method: "POST",

@@ -23,8 +23,8 @@ import com.myweb.mybank.model.services.UsersService;
 @RestController
 @CrossOrigin(origins = "http://localhost:5500")
 public class AppController {
-    @Autowired
-    private UserRepository repo;
+    // @Autowired
+    // private UserRepository repo;
     @Autowired
     private TransactionRepository trepo;
     @Autowired

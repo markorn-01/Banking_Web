@@ -3,14 +3,11 @@ package com.myweb.mybank.config;
 
 import java.util.Arrays;
 
-import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,8 +24,6 @@ import com.myweb.mybank.model.services.UsersService;
 @Configuration
 @EnableWebSecurity
 public class Security extends WebSecurityConfigurerAdapter{
-    @Autowired
-    private DataSource dataSource;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -54,6 +49,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+            .csrf().disable()
             .cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
             .authorizeRequests()
 			.antMatchers("/users").authenticated()
@@ -72,7 +68,7 @@ public class Security extends WebSecurityConfigurerAdapter{
         CorsConfiguration cors = new CorsConfiguration();
         cors.setAllowedOrigins(Arrays.asList("*"));
         cors.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        cors.setAllowedHeaders(Arrays.asList("Accept", "Content-Type"));
+        cors.setAllowedHeaders(Arrays.asList("Accept", "Content-Type", "Access-Control-Allow-Origin"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cors);
         return source;
